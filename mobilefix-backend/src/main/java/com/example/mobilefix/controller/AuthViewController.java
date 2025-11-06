@@ -1,5 +1,6 @@
 package com.example.mobilefix.controller;
 
+import com.example.mobilefix.dto.LoginRequest;
 import com.example.mobilefix.dto.RegisterRequestDTO;
 import com.example.mobilefix.model.User;
 import com.example.mobilefix.repository.UserRepository;
@@ -25,23 +26,22 @@ public class AuthViewController {
         return "redirect:/login";
     }
 
-    @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
-    }
-
     @GetMapping("/welcome")
     public String dashboard() {
         return "welcome";
     }
 
+    @GetMapping("/login")
+    public String showLoginForm(Model model) {
+        model.addAttribute("login", new LoginRequest());
+        return "login";
+    }
+
     @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        Model model){
-        User user = userRepo.findByUsername(username);
-        if (user == null || !user.getPassword().equals(password)){
-            model.addAttribute("Error","Credenciales inválidas");
+    public String login(@ModelAttribute("login") LoginRequest loginDto, Model model){
+        User user = userRepo.findByUsername(loginDto.getUsername());
+        if (user == null || !user.getPassword().equals(loginDto.getPassword())){
+            model.addAttribute("error","Credenciales inválidas");
             return "login";
         }
         return "redirect:/welcome";
@@ -72,6 +72,6 @@ public class AuthViewController {
         userRepo.save(newUser);
 
         model.addAttribute("success", "Usuario registrado exitosamente");
-        return "login";
+        return "register";
     }
 }

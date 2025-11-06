@@ -1,40 +1,73 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Registro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h2>Registro</h2>
 
-<form action="/register" method="post" th:object="${user}">
-    <label>Usuario:</label>
-    <input type="text" th:field="*{username}" required><br>
+<body class="bg-gradient-to-br from-slate-100 to-blue-50 flex items-center justify-center min-h-screen">
 
-    <label>Contraseña:</label>
-    <input type="password" th:field="*{password}" required><br>
+<div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md border border-slate-200">
+    <h2 class="text-2xl font-semibold text-center text-slate-700 mb-6">Crear cuenta</h2>
 
-    <label>Nombre Completo:</label>
-    <input type="text" th:field="*{fullname}" required><br>
+    <!-- Mensajes -->
+    <div th:if="${error}" class="mb-4">
+        <p th:text="${error}" class="text-red-600 text-sm font-medium text-center bg-red-50 p-2 rounded-md"></p>
+    </div>
 
-    <label>Email:</label>
-    <input type="email" th:field="*{email}" required><br>
+    <div th:if="${success}" class="mb-4">
+        <p th:text="${success}" class="text-green-600 text-sm font-medium text-center bg-green-50 p-2 rounded-md"></p>
+    </div>
 
-    <button type="submit">Registrar</button>
-</form>
+    <form action="/register" method="post" th:object="${user}" class="space-y-5">
+        <!-- Usuario -->
+        <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">Usuario</label>
+            <input type="text" th:field="*{username}"
+                   class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+                   placeholder="Nombre de usuario" required>
+        </div>
 
-<br>
-<a href="/login">Volver al login</a>
+        <!-- Contraseña -->
+        <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">Contraseña</label>
+            <input type="password" th:field="*{password}"
+                   class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+                   placeholder="••••••••" required>
+        </div>
 
-<div th:if="${error}" style="color:red;">
-    <p th:text="${error}"></p>
-</div>
+        <!-- Nombre Completo -->
+        <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">Nombre Completo</label>
+            <input type="text" th:field="*{fullname}"
+                   class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+                   placeholder="Tu nombre completo" required>
+        </div>
 
-<div th:if="${success}" style="color:green;">
-    <p th:text="${success}"></p>
+        <!-- Email -->
+        <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">Correo electrónico</label>
+            <input type="email" th:field="*{email}"
+                   class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+                   placeholder="ejemplo@correo.com" required>
+        </div>
+
+        <!-- Botón -->
+        <div>
+            <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition">
+                Registrar
+            </button>
+        </div>
+    </form>
+
+    <div class="text-center mt-6">
+        <a href="/login" class="text-blue-600 hover:text-blue-700 text-sm font-medium transition">
+            ¿Ya tienes cuenta? Inicia sesión
+        </a>
+    </div>
 </div>
 
 </body>
 </html>
-
-
-
